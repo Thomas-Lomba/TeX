@@ -1,0 +1,647 @@
+\documentclass{scrreport}
+
+
+% LANGUAGES AND SYMBOLS
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english,frenchb]{babel}
+\usepackage{lmodern}
+\usepackage{xparse}
+
+\usepackage{palatino}
+
+% EVERYDAY PACKAGES
+\usepackage{lipsum}
+\usepackage[shortlabels]{enumitem}
+\usepackage{verbatim}
+\usepackage[normalem]{ulem}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{tcolorbox}\tcbuselibrary{most}
+\usepackage{sectsty}
+\usepackage{csquotes}
+\usepackage{pdfpages}
+\usepackage{easy-todo}
+\usepackage{setspace}
+%\usepackage[all]{nowidow}
+\usepackage{enumitem}
+
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+
+% MATHEMATICS
+\usepackage{mathtools, mathrsfs}
+\usepackage{stmaryrd}
+\usepackage{amsthm, thmtools}
+\usepackage{framed}
+\usepackage{nameref}
+\usepackage[colorlinks,menucolor=blue,linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref} 
+\usepackage[capitalise]{cleveref}% if problems, load cleveref last
+\crefname{subsection}{Subsection}{Subsections}
+\Crefname{subsection}{Subsection}{Subsections}
+%\usepackage[retainorgcmds]{IEEEtrantools}
+\usepackage{amssymb}
+\usepackage{esint}
+\usepackage{esvect}
+\usepackage{relsize}
+
+% \usepackage{tikz}
+% \usepackage{tikz-qtree}
+% \usepackage[framemethod=tikz]{mdframed}
+% \usetikzlibrary{cd}
+% \usetikzlibrary{matrix}
+% \usetikzlibrary{backgrounds}
+% \usepackage{pgfplots}
+
+\usepackage{fancyhdr}
+
+
+% My environments
+
+\newtheoremstyle{def}
+{\topsep} % Space above
+{\topsep} % Space below
+{\color{black}\normalfont} % Body font
+{} % Indent amount
+{\color{blue}\normalfont\bfseries} % Theorem head font
+{.} % Punctuation after theorem head
+{.5em} % Space after theorem head
+{} % Theorem head spec (can be left empty, meaning `normal')
+
+\tcolorboxenvironment{definition}{blanker, breakable, borderline west={1mm}{-5mm}{yellow}}
+
+\newtheoremstyle{prop}
+{\topsep} % Space above
+{\topsep} % Space below
+{\color{black}\normalfont\itshape} % Body font
+{} % Indent amount
+{\color{blue}\normalfont\bfseries} % Theorem head font
+{.} % Punctuation after theorem head
+{.5em} % Space after theorem head
+{} % Theorem head spec (can be left empty, meaning `normal')
+
+\newtheoremstyle{thm}
+{\topsep} % Space above
+{\topsep} % Space below
+{\color{black}\normalfont\itshape} % Body font
+{} % Indent amount
+{\color{blue}\normalfont\bfseries\itshape} % Theorem head font
+{.} % Punctuation after theorem head
+{.5em} % Space after theorem head
+{} % Theorem head spec (can be left empty, meaning `normal')
+
+\newtheoremstyle{rem}
+{\topsep} % Space above
+{\topsep} % Space below
+{\color{black}\normalfont} % Body font
+{} % Indent amount
+{\color{blue}\normalfont\itshape} % Theorem head font
+{.} % Punctuation after theorem head
+{.5em} % Space after theorem head
+{} % Theorem head spec (can be left empty, meaning `normal')
+
+
+\AtBeginDocument{\renewcommand\proofname{\textsc{Démonstration}}}
+
+\theoremstyle{def}
+\newtheorem{definition}{Définition}
+\newtheorem{notation}[definition]{Notation}
+\newtheorem{example}[definition]{Exemple}
+\newtheorem{exercise}[definition]{Exercice}
+
+\theoremstyle{thm}
+\newtheorem{theorem}[definition]{Théroème}
+
+\theoremstyle{prop}
+\newtheorem{lemma}[definition]{Lemme}
+\newtheorem{proposition}[definition]{Proposition}
+\newtheorem{corol}[definition]{Corollaire}
+
+\theoremstyle{rem}
+\newtheorem{remark}[definition]{Remarque}
+
+\numberwithin{definition}{section}
+\numberwithin{lemma}{section}
+\numberwithin{proposition}{section}
+\numberwithin{theorem}{section}
+\numberwithin{corol}{section}
+\numberwithin{notation}{section}
+\numberwithin{example}{section}
+\numberwithin{exercise}{section}
+\numberwithin{remark}{section}
+
+
+
+% My macros
+
+\newcommand{\cc}{\complement}
+
+\newcommand{\OO}{\varnothing}
+\newcommand{\N}{\mathbf{N}}
+\newcommand{\Z}{\mathbf{Z}}
+\newcommand{\Q}{\mathbf{Q}}
+\newcommand{\R}{\mathbf{R}}
+\newcommand{\RR}{\overline{\R}}
+\newcommand{\C}{\mathbf{C}}
+\newcommand{\K}{\mathbf{K}}
+
+\newcommand{\defeq}{\stackrel{\text{\tiny{\textnormal{def}}}}{=}}
+
+\newcommand{\scrA}{\mathscr{A}}
+\newcommand{\scrB}{\mathscr{B}}
+\newcommand{\scrC}{\mathscr{C}}
+\newcommand{\scrL}{\mathscr{L}}
+\newcommand{\scrM}{\mathscr{M}}
+\newcommand{\scrP}{\mathscr{P}}
+\newcommand{\scrR}{\mathscr{R}}
+\newcommand{\scrT}{\mathscr{T}}
+
+
+\newcommand{\lio}{\mathopen{]}}
+\newcommand{\biglio}{\bigl]}
+\newcommand{\Biglio}{\Bigl]}
+
+\newcommand{\rio}{\mathclose{[}}
+\newcommand{\bigrio}{\bigr[}
+\newcommand{\Bigio}{\Bigr[}
+
+
+\newcommand{\Ss}{\mathop{}\mathopen{}}
+\newcommand{\p}{\:\!}
+
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\DD}{\partial}
+
+\newcommand{\ddd}[2]{\frac{\dd {#1}}{\dd {#2}}}
+\newcommand{\DDD}[2]{\frac{\DD {#1}}{\DD {#2}}}
+\newcommand{\ddde}[3]{\frac{\dd^{#3} {#1}}{\dd {#2}^{#3}}}
+\newcommand{\DDDe}[3]{\frac{\DD^{#3} {#1}}{\DD {#2}^{3}}}
+
+
+
+% My operators
+
+
+
+
+
+% \pagestyle{fancy}
+\title{Théorie de la mesure \\ et de l'intégration}
+\author{\normalsize Livre de \\ \LARGE \textbf{\textsc{Rolland} Robert} \\ \hfill \\ \normalsize Document écrit par \\ \Large \textbf{\textsc{Lomba} Thomas}}
+\date{2023 -- 2024}
+
+\begin{document}
+	
+\maketitle
+	
+\renewcommand{\contentsname}{Table des matières}
+\setcounter{tocdepth}{2}
+\tableofcontents
+
+\newpage
+
+\chapter{Espaces mesurables - Fonctions mesurables}
+
+\section{Clan unitaire}
+
+\begin{definition}\label{def1:1:1}
+	Soit \(E\) un ensemble non-vide. Une famille non vide \(\scrC\) de parties de \(E\) est appelée clan unitaire sur \(E\) si elle possède les propriétés suivantes :
+	\begin{enumerate}
+		\item pour toute partie \(A\) et toute partie \(B\) éléments de \(\scrC\), la partie \(A \cup B\) est un éléments de \(\scrC\) ;
+		\item pour toute partie \(A\) élément de \(\scrC\), la partie \(\cc_E A\) est un élément de \(\scrC\).
+	\end{enumerate}
+\end{definition}
+
+\begin{proposition}\label{prop1:1:2}
+	Si \(\scrC\) est un clan unitaire de parties de \(E\), il possède les propriétés suivantes:
+	\begin{enumerate}
+		\item[0'.] les ensembles \(E\) et \(\OO\) sont des éléments de \(\scrC\) ;
+		\item[1'.] pour toute parte \(A\) et toute partie \(B\) éléments de \(\scrC\), la partie \(A \cap B\) est un élément de \(\scrC\) ;
+		\item[3'.] pour toute famille finie \({(A_i)}_{i \in I}\) d'éléments de \(\scrC\), les ensembles \(\cup_{i \in I} A_i\) et \(\cap_{i \in I} A_i\) sont des éléments de \(\scrC\).
+	\end{enumerate}
+\end{proposition}
+
+\begin{remark}\label{rem1:1:3}
+	Dans la définition d'un clan unitaire, on peut remplacer la condition 1 par la condition 1' en vertu la proposition précédente et de l'égalité :
+	\[ A \cup B = \cc_E \bigl( \cc_E A \cap \cc_E B \bigr) \: \text{.} \]
+\end{remark}
+
+\begin{example}\label{expl1:1:4}
+	Soit \(E\) un ensemble non-vide. L'ensemble \(\scrP(E)\) des parties de \(E\) est un clan unitaire sur \(E\).
+\end{example}
+
+\begin{example}\label{expl1:1:5}
+	Soit \(E\) un ensemble non-vide. L'ensemble à deux éléments \(\{\varnothing\,, E\}\) est un clan unitaire sur \(E\).
+\end{example}
+
+\begin{example}\label{expl1:1:6}
+	L'ensemble de toutes les réunions finies d'intervalles de l'ensemble de nombres réels \(\R\) est un clan unitaire sur (il s'agit ici des intervalles \([a, b]\) ouverts, fermés ou semi-ouverts avec \(a \leqslant b\) et éventuellement \(a\) ou \(b\) prenant les valeurs \(+\infty\) ou \(-\infty\)).
+\end{example}
+
+\begin{proposition}\label{prop1:1:7}
+	Soit \({(\scrC_i)}_{i \in I}\) une famille non-vide de clans unitaires sur un ensemble \(E\). Alors \(\cap_{i \in I} \scrC_i\) est un clan unitaire sur l'ensemble \(E\).
+\end{proposition}
+
+\begin{proposition}\label{prop1:1:8}
+	Soit \(\scrA\) un ensemble de parties de \(E\). Il existe un plus petit clan unitaire contenant \(\scrA\). Ce clan unitaire est l'intersection de tous les clans unitaires contenant \(\scrA\).
+\end{proposition}
+
+\begin{remark}\label{rem1:1:9}
+	Si \(\scrA\) est vide, la plus petit clan unitaire sur \(E\) contenant \(\scrA\) est \(\{\p \OO\,, E \p\}\).
+\end{remark}
+
+\begin{definition}\label{def1:1:10}
+	Le plus petit clan unitaire sur \(E\) contenant \(\scrA\) est appelé clan unitaire engendré par \(\scrA\). Nous le noterons \(\scrC(\scrA)\).
+\end{definition}
+
+\begin{remark}\label{rem1:1:11}
+	Le clan unitaire donné dans l'\hyperref[expl1:1:6]{exemple 1.1.6} est le clan engendré par les intervalles de \(\R\).
+\end{remark}
+
+\section{Tribu}
+
+\begin{definition}\label{def1:2:1}
+	Soit \(E\) un ensemble non-vide. Une famille non-vide \(\scrT\) de parties de \(E\) est appelée tribu si elle possède les propriétés suivantes :
+	\begin{enumerate}
+		\item la famille \(\scrT\) est un clan unitaire sur \(E\) ;
+		\item pour toute suite  \({(A_n)}_{n \in \N}\) d'éléments de \(\scrT\), la réunion \(\cup_{n \in \N} A_n\) est un élément de \(\scrT\).
+	\end{enumerate}
+\end{definition}
+
+\begin{proposition}\label{prop1:2:2}
+	Si \(\scrT\) est un clan unitaire sur \(E\), elle possède les propriétés suivantes :
+	\begin{enumerate}
+		\item[\textnormal{1'.}] les ensembles \(E\) et \(\OO\) sont des éléments de de \(\scrT\) ;
+		\item[\textnormal{2'.}] pour toute suite \({(A_n)}_{n \in \N}\) d'éléments de \(\scrT\), l'intersection \(\cap_{n \in \N} A_n\) est un élément de \(\scrT\).
+	\end{enumerate}
+\end{proposition}
+
+\begin{proposition}\label{prop1:2:3}
+	Soit \({(\scrT_i)}_{i \in I}\) une famille non-vide de tribus sur un ensemble \(E\). Alors \(\cap_{i \in I}\) est une tribu sur \(E\).
+\end{proposition}
+
+\begin{proposition}\label{prop1:2:4}
+	Soit \(\scrA\) un ensemble de parties de \(E\). Il existe une plus petite tribu contenant \(\scrA\). Cette tribu est l'intersection de toute les tribus contenant \(\scrA\).
+\end{proposition}
+
+\begin{remark}\label{rem1:2:5}
+	Si \(\scrA\) est vide, la plus petite tribu sur \(E\) contenant \(\scrA\) est \(\{\p \OO\,, E \p\}\).
+\end{remark}
+
+\begin{definition}\label{def1:2:6}
+	La plus petite tribu sur \(E\) contenant \(\scrA\) est appelée tribu engendrée par \(\scrA\). Nous la noterons \(\scrT(\scrA)\).
+\end{definition}
+
+\begin{definition}\label{def1:2:7}
+	Soit \(E\) un espace topologique. La tribu engendré sur \(E\) par les ouverts de \(E\) est appelée tribu borélienne de \(E\). On la notera \(\scrB(E)\). Les éléments de cette tribu sont appelés les parties boréliennes de \(E\) ou encore les boréliens de \(E\).
+\end{definition}
+
+\begin{proposition}\label{prop1:2:8}
+	La tribu borélienne d'un espace topologique \(E\) est aussi engendrée par les fermés de \(E\).
+\end{proposition}
+
+\section{Clan et \(\sigma\)-clan}
+
+\begin{definition}\label{def:1:3:1}
+	On appelle clan sur \(E\) toute famille \(\scrR\) de parties de \(E\) telle que :
+	\begin{enumerate}
+		\item si \(A \in \scrR\) et \(B \in \scrR\), alors \(A \cup B \in \scrR\) ;
+		\item si \(A \in \scrR\) et \(B \in \scrR\), alors \(A \setminus B \in \scrR\).
+	\end{enumerate}
+\end{definition}
+
+\begin{definition}\label{def1:3:2}
+	Soit \(E\) un ensemble non-vide. Une famille non vide \(\scrT\) de parties de \(E\) est appelée \(\sigma\)-clan sur \(E\) si elle possède les propriétés suivantes :
+	\begin{enumerate}
+		\item la famille \(\scrT\) est un clan sur \(E\) ;
+		\item pour toute suite \({(A_n)}_{n \in \N}\) d'éléments de \(\scrT\), la réunion \(\cup_{n \in \N} A_N\) est un élément de \(\scrT\).
+	\end{enumerate}
+\end{definition}
+
+\section{Espaces mesurables}
+
+\begin{definition}\label{def1:4:1}
+	On appelle espace mesurable tout couple \((E\,, \scrT)\) où \(E\) est un ensemble non-vide et \(\scrT\) une tribu sur \(E\). Les éléments de la tribu \(\scrT\) sont alors les ensembles mesurables.
+\end{definition}
+
+\begin{proposition}\label{prop1:4:2}
+	Soit \((E\,, \scrT)\) un espace mesurable et \(A\) un sous-ensemble non-vide de \(E\). Posons
+	\[ \scrT_{|A} = \{\p B \cap A \mathrel{:} B \in \scrT \p\} \: \text{.} \]
+	Alors \(\scrT_{|A}\) est une tribu sur \(A\).
+\end{proposition}
+
+\begin{definition}\label{def1:4:3}
+	La tribu \(\scrT_{|A}\) introduite par la proposition précédente est la tribu induite par \(\scrT\) sur \(A\).
+\end{definition}
+
+\begin{definition}\label{def1:4:4}
+	Si \((E\,, \scrT)\) est un espace mesurable, on appelle sous-espace mesurable de \((E\,, \scrT)\) tout couple \((A\,, \scrT')\) où \(A\) est un sous-ensemble non-vide de \(E\) et \(\scrT'\) la tribu induite par \(\scrT\) sur \(A\).
+\end{definition}
+
+\begin{definition}
+	Si \({(E_i\,, \scrT_i)}_{i \in I}\) est une famille finie non-vide d'espaces mesurables, on appelle espace mesurable produit de ces espaces, l'espace mesurable
+	\[ \Biggl( \prod_{i \in I} E_i \,, \bigotimes_{i \in I} \scrT_i \Biggr) \: \text{,} \]
+	où
+	\begin{enumerate}\label{def1:4:5}
+		\item \(\prod_{i \in I} E_i\) est le produit cartésien des ensembles \(E_i\) ;
+		\item \(\bigotimes_{i \in I} E_i\) est la tribu engendrée par les ensembles de la forme \(\prod_{i \in I} A_i\) où \(A_i \in \scrT_i\), qu'on appelle tribu produit des tribus \(\scrT_i\). On note \(\scrT_1 \otimes \scrT_2\) le produit de deux tribus.
+	\end{enumerate}
+\end{definition}
+
+\section{Fonctions mesurables}
+
+\subsection{Définition et premiers exemples}
+
+\begin{definition}\label{def1:5:1}
+	Soient \((E_1\,, \scrT_1)\) et \((E_2\,, \scrT_2)\) deux espaces mesurables et \(f\) une fonction de \(E_1\) dans \(E_2\). \\ \indent
+	L'application est dite \(\scrT_1 \scrT_2\)- mesurable (ou plus brièvement mesurable si aucune confusion n'en résulte) si elle possède la propriété suivante :
+	\begin{itemize}
+		\item pour tout élément \(B\) de \(\scrT_2\), l'image réciproque \(f^{-1}(B)\) est un élément de \(\scrT_1\).
+	\end{itemize}
+	
+	Nous noterons \(\scrM \bigl((E_1\,, \scrT_1)\,, (E_2\,, \scrT_2)\bigr)\) l'ensemble de toutes les application linéaires qui sont \(\scrT_1 \scrT_2\)-mesurables de \(E_1\) dans \(E_2\). Si \(E_1\) et \(E_2\) sont des espaces topologiques et que \(\scrT_1\) et \(\scrT_2\) sont les tribus boréliennes \(\scrB(E_1)\) et \(\scrB(E_2)\) de \(E_1\) et \(E_2\), nous appellerons les fonctions \(\scrB(E_1) \scrB(E_2)\)-mesurables fonctions boréliennes et nous noterons \(\scrM(E_1\,, E_2)\) l'ensemble de ces fonctions.
+\end{definition}
+
+\begin{example}\label{expl1:5:2}
+	Soient \(E_1\) et \(E_2\) deux ensembles non-vides. On prend pour \(\scrT_1\) la tribu \(\scrP(E_1)\) et pour \(\scrT_2\) la tribu \(\{\p \OO\,, E \p\}\). Alors toute fonction de \(E_1\) dans \(E_2\) est mesurables.
+\end{example}
+
+\begin{example}\label{expl1:5:3}
+	Soient \(E_1\) et \(E_2\) deux ensembles non-vides. On prend pour \(\scrT_1\) la tribu \(\scrP(E_1)\) de toutes les parties de \(E_1\) et pour \(\scrT_2\) une tribu quelconque. Alors toute fonction \(f\) de \(E_1\) dans \(E_2\) est mesurable.
+\end{example}
+
+\begin{example}\label{expl1:5:4}
+	Soient \((E_1\,, \scrT_1)\) et \((E_2\,, \scrT_2)\) deux espaces mesurables. Soit \(f\) une fonction constante de \(E_1\) dans \(E_2\). Alors \(f\) est mesurable.
+\end{example}
+
+\begin{example}\label{expl1:5:5}
+	Soit \((E_1\,, \scrT_1)\) un sous-espace mesurable d'un espace \((E_2\,, \scrT_2)\). Alors l'injection canonique \(f\) de \(E_1\) dans \(E_2\) est une fonction \(\scrT_1 \scrT_2\)-mesurable.
+\end{example}
+
+\begin{example}\label{expl1:5:6}
+	Soient \((E_1\,, \scrT_1)\) et \((E_2\,, \scrT_2)\) deux espaces mesurables. Alors la surjection canonique de \(E_1 \times E_2\) dans \(E_1\) est \((\scrT_1 \otimes \scrT_2) \scrT_1\)-mesurable.
+\end{example}
+
+\subsection{Résultats généraux sur les fonctions mesurables}
+
+\begin{proposition}\label{prop1:5:7}
+	Soient \((E_1\,, \scrT_1)\), \((E_2\,, \scrT_2)\) et \((E_3\,, \scrT_3)\) trois espaces mesurables, \(f\) une application \(\scrT_1 \scrT_2\)-mesurable de \(E_1\) dans \(E_2\), \(g\) une application \(\scrT_2 \scrT_3\)-mesurable de \(E_2\) dans \(E_3\). Alors \(g \circ f\) est une application \(\scrT_1 \scrT_3\)-mesurable de \(E_1\) dans \(E_3\).
+\end{proposition}
+
+\begin{proposition}\label{prop1:5:8}
+	Soient \(E_1\) et \(E_2\) deux ensembles non-vides et \(f\) une fonction de \(E_1\) dans \(E_2\). Si \(\scrT_2\) est une tribu sur \(E_2\), la famille
+	\[ \scrT_1 = f^{-1}(\scrT_2) \defeq \{\p f^{-1}(B) \mathrel{:} B \in \scrT_2 \p\} \]
+	est une tribu sur \(E_1\). De plus si \(\scrA \subset \scrP(E)\), alors la tribu \(\scrT(\scrA)\) engendrée par \(\scrA\) vérifie :
+	\[ f^{-1}\bigl(\scrT(\scrA)\bigr) = \scrT\bigl(f^{-1}(\scrA)\bigr) \: \text{.} \]
+\end{proposition}
+
+\begin{proof}
+	La première partie de la proposition est admise (voir livre). \\ \indent
+	Soit \(\scrA \subset \scrP(E_2)\). D'après la première partie de la proposition (toujours voir livre) \(f^{-1}\bigl(\scrT(\scrA)\bigr)\) est une tribu, et cette tribu contient \(f^{-1}(\scrA)\). Puisque \(\scrT\bigl(f^{-1}(\scrA)\bigr)\) est la plus petite tribu contenant \(f^{-1}(\scrA)\), on peut écrire :
+	\[ \scrT\bigl(f^{-1}(\scrA)\bigr) \subset f^{-1}\bigl(\scrT(\scrA)\bigr) \: \text{.} \]
+	Soit :
+	\[ \scrL = \Bigl\{\p B \in \scrT(\scrA) \mathrel{\Big|} f^{-1}(B) \in \scrT\bigl(f^{-1}(\scrA)\bigr) \p\Bigr\} \: \text{.} \]
+	Il est facile de voir que \(\scrL\) est une tribu sur \(E_2\). Par ailleurs :
+	\[ \scrA \subset \scrL \subset \scrT(\scrA) \: \text{.} \]
+	Donc \(\scrL = \scrT(\scrA)\). Par suite, pour tout élément \(B \in \scrT(\scrA)\), l'élément \(f^{-1}(B)\) appartient à \(\scrT\bigl(f^{-1}(\scrA)\bigr)\), ce qui prouve
+	\[ f^{-1}\bigl(\scrT(\scrA)\bigr) \subset \scrT\bigl(f^{-1}(\scrA)\bigr) \: \text{,} \]
+	et on en conclut que :
+	\[ f^{-1}\bigl(\scrT(\scrA)\bigr) = \scrT\bigl(f^{-1}(\scrA)\bigr) \: \text{.} \]
+\end{proof}
+
+\begin{remark}\label{rem1:5:9}
+	On peut définir de la même manière la tribu engendré par une famille de fonctions \({(f_i)}_{i \in I}\) où \(f_i\) est une fonction de \(E_1\) dans un espace mesurable \((E_{2,i}\,, \scrT_i)\). C'est la tribu engendrée par la réunion des tribus \({f_i}^{-1}(\scrT_i)\), c'est-à-dire la plus petite tribu sur \(E_1\) qui rende mesurable toute les fonctions \(f_i\).
+\end{remark}
+
+\begin{theorem}[Critère de mesurabilité]\label{thm1:5:10}
+	Soient \((E_1\,, \scrT_1)\) et \((E_2\,, \scrT_2)\) deux espaces mesurables. Soit \(\scrA\) une famille de parties de \(E_2\) qui engendre \(\scrT_2\). Pour qu'une fonction \(f\) de \(E_1\) dans \(E_2\) soit \(\scrT_1 \scrT_2\)-mesurable, il faut et il suffit que \(f^{-1}(\scrA) \subset \scrT_1\).
+\end{theorem}
+
+\subsection{Exemples importants}
+
+\begin{proposition}\label{prop1:5:11}
+	Soit \(\scrA\) (resp. \(\scrA'\)) l'ensemble des intervalles de \(\scrR\) de la forme \(\lio-\infty\,, a]\) (resp. \(\lio-\infty\,, a\rio\) ). Alors la tribu borélienne \(\scrB(\R)\) de \(\R\) est engendrée par \(\scrA\) (resp. \(\scrA'\)).
+\end{proposition}
+
+\begin{proposition}\label{prop1:5:12}
+	Soit \(\scrA\) (resp. \(\scrA'\)) l'ensemble des intervalles de \(\RR\) de la forme \([-\infty\,, a]\) (resp. \([-\infty\,, a\rio\) ). Alors la tribu borélienne \(\scrB(\RR)\) de \(\RR\) est engendrée par \(\scrA\) (resp. \(\scrA'\)).
+\end{proposition}
+
+\begin{proposition}\label{prop1:5:13}
+	Toute fonction continue d'un espace topologique \(E_1\) dans un espace topologique \(E_2\) est borélienne.
+\end{proposition}
+
+\begin{proposition}\label{prop1:5:14}
+	Soit \(E\) un espace topologique et \(A\) un sous-ensemble de \(E\). Alors la tribu \(\scrB(E)_{|A}\) induite sur \(A\) par la tribu borélienne de \(E\), est la tribu borélienne sur \(A\).
+\end{proposition}
+
+\begin{proposition}\label{prop1:5:15}
+	Soit \({(E_i)}_{i \in I}\) une famille finie non-vide d'espaces topologiques ayant chacun une base dénombrable d'ouverts. Alors :
+	\[ \scrB\Biggl(\prod_{i \in I} E_i\Biggr) = \bigotimes_{i \in I} \scrB(E_i) \: \text{.} \]
+\end{proposition}
+
+\begin{proposition}\label{prop1:5:16}
+	Soient \((E\,, \scrT)\) un espace mesurable et \({(F_i)}_{i \in I}\) une famille finie non-vide d'espaces topologiques possédant chacun une base dénombrable d'ouverts. Soit \(u\) une application de \(E\) dans le produit \(\prod_{i \in I} F_i\). On notera \(u(x) = {\bigl(u_i(x)\bigr)}_{i \in I}\) l'image de \(x\) par l'application \(u\). Pour que \(u\) soit \(\scrT \scrB(\prod_{i \in I}F_i)\)-mesurable, il faut et il suffit que pour tout \(i \in I\), l'application \(u_i\) soit \(\scrT \scrB(F_i)\)-mesurable.
+\end{proposition}
+
+\begin{theorem}\label{thm1:5:17}
+	Soient \((E\,, \scrT)\) un espace mesurable et \(F\) un espace vectoriel normé séparable sur \(\K\) (\(\K = \R\) ou \(\C\)). Alors l'ensemble de fonction mesurables \(\scrM\bigl((E\,, \scrT) \,, (F\,, \scrB(F))\bigr)\) est une algèbre.
+\end{theorem}
+
+\begin{theorem}\label{thm1:5:18}
+	Soient \(f\) et \(g\) deux fonctions \(\scrT \scrB(\RR)\)-mesurables, d'un espace mesurable \((E\,, \scrT)\) dans \(\RR\). Alors :
+	\[ \sup(f, g) \: \text{,} \quad \inf(f, g) \: \text{,} \quad f^+ \: \text{,} \quad f^- \: \text{,} \quad |f| \: \text{,} \]
+	sont \(\scrT \scrB(\RR^+)\)-mesurables.
+\end{theorem}
+
+\begin{theorem}\label{thm1:5:19}
+	Soit \({(f_n)}_n\) une suite de fonctions d'un espace mesurable \((E\,, \scrT)\) dans \(\RR\) qui sont \(\scrT \scrB(\RR)\)-mesurables. Les fonctions \(\sup_n f_n\), \(\inf_n f_n\), \(\limsup_{n \to +\infty} f_n\) et \(\liminf_{n \to +\infty} f_n\) sont \(\scrT \scrB(\RR)\)-mesurables.
+\end{theorem}
+
+\begin{theorem}[Convergence simple]\label{thm1:5:20}
+	Soit \({(f_n)}_{n \in \N}\) une suite de fonctions \(\scrT \scrB(\RR)\)-mesurables qui convergent simplement vers une fonction \(f\). Alors la limite simple \(f\) est une fonction \(\scrT \scrB(\RR)\)-mesurable.
+\end{theorem}
+
+\begin{theorem}\label{thm1:5:21}
+	Soit \((E\,, \scrT)\) un espace mesurable. La somme et le produit de deux fonctions \(\scrT \scrB(\RR^+)\)-mesurables de \(E\) dans \(\RR^+\) sont mesurables. Le produit d'une fonction \(\scrT \scrB(\RR^+)\)-mesurable par un élément de \(\RR^+\) est une fonction \(\scrT \scrB(\RR^+)\)-mesurable.
+\end{theorem}
+
+\chapter{Mesures positives - Espaces mesurés}
+
+\section{Mesures positives sur un clan unitaire}
+
+\begin{definition}\label{def2:1:1}
+	Soit \(\scrC\) un clan unitaire sur un ensemble non-vide \(E\). Une mesure positive \(\mu\) sur \(\scrC\) est une application de \(\scrC\) dans \(\RR^+\) telle que :
+	\begin{enumerate}
+		\item il existe un élément \(A \in \scrC\) tel que \(\mu(A) < +\infty\) ;
+		\item si \({(A_n)}_{n \in \N}\) est une suite d'éléments deux à deux disjoints de \(\scrC\) telle que \(\cup_{n \in \N} A_n \in \scrC\), alors :
+		\[ \mu \Biggl( \bigcup_{n \in \N} A_n \Biggr) = \sum_{n = 0}^{+\infty} \mu(A_n) \: \text{.} \]
+	\end{enumerate}
+\end{definition}
+
+\begin{proposition}\label{prop2:1:2}
+	Soit \(\mu\) une mesure positive sur un clan unitaire \(\scrC\), alors \(\mu(\OO) = 0\).
+\end{proposition}
+
+\begin{proposition}\label{prop2:1:3}
+	Si \(\mu\) est une mesure positive sur un clan unitaire \(\scrC\), on a pour toute famille finie \({(A_i)}_{i \in I}\) d'éléments deux à deux disjoints de \(\scrC\) :
+	\[ \mu \Biggl( \bigcup_{i \in I} A_i \Biggr) \: \text{.} \]
+\end{proposition}
+
+\begin{proposition}\label{prop2:1:4}
+	Si \(\mu\) est une mesure positive sur un clan unitaire \(\scrC\), et si \(A\) et \(B\) sont deux éléments de \(\scrC\) avec \(A \subset B\), alors \(\mu(A) \leqslant \mu(B)\).
+\end{proposition}
+
+\begin{proposition}\label{prop2:1:5}
+	Si \(\mu\) est une mesure positive sur un clan unitaire \(\scrC\), et si \(A\) et \(B\) sont deux éléments de \(\scrC\), alors :
+	\[ \mu(A \cup B) \leqslant \mu(A) + \mu(B) \: \text{.} \]
+\end{proposition}
+
+\begin{proposition}\label{prop2:1:6}
+	Si \(\mu\) est une mesure positive sur un clan unitaire \(\scrC\), on a pour toute famille finie \({(A_i)}_{i \in I}\) d'éléments de \(\scrC\) :
+	\[ \mu \Biggl( \bigcup_{i \in I} A_i \Biggr) \leqslant \sum_{i \in I} \mu(A_i) \: \text{.} \]
+\end{proposition}
+
+\begin{example}\label{expl2:1:7}
+	Soit \(E\) un ensemble non-vide. Prenons \(\scrC = \scrP(E)\) l'ensemble des parties de \(E\), et fixons \(x_0 \in E\). L'application \(\delta_{x_0}\) de \(\scrP(E)\) dans \(\RR^+\) définie par :
+	\[ \delta_{x_0}(A) = \begin{cases} 0 & \quad \text{si} \quad x_0 \notin A \\ 1 & \quad \text{si} \quad x_0 \in A \end{cases} \: \text{,} \]
+	est une mesure positive sur \(\scrP(E)\). On l'appelle la mesure de Dirac au point \(x_0\).
+\end{example}
+
+\begin{example}\label{expl2:1:8}
+	Soit \(E\) un ensemble non-vide. On prend \(\scrC = \scrP(E)\) l'ensemble des parties de \(E\). L'application \(\mu\) dans \(\RR^+\) qui à tout \(A\) associe le nombre d'éléments de \(A\) (éventuellement \(+\infty\)) est une mesure positive sur \(\scrP(E)\).
+\end{example}
+
+\begin{definition}\label{def2:1:9}
+	Soit \(\mu\) une mesure positive sur un clan unitaire \(\scrC\).
+	\begin{itemize}
+		\item La mesure \(\mu\) est dite finie si pour tout \(A \in \scrC\), on a \(\mu(A) < +\infty\).
+		\item La mesure \(\mu\) est dite \(\sigma\)-finie si tout élément \(A\) de \(\scrC\) peut-être recouvert par une famille dénombrable \({(A_n)}_{n \in \N}\) d'éléments de \(\scrC\), telle que pour tout \(n\) la mesure de \(A_n\) soit finie.
+	\end{itemize}
+\end{definition}
+
+\begin{remark}\label{rem2:1:10}
+	Si \(\scrC\) est un clan unitaire sur \(E\), et \(\mu\) une mesure positive sur \(\scrC\), pour que \(\mu\) soit finie, il faut et il suffit que \(\mu(E) < +\infty\). \\ \indent
+	Pour que \(\mu\) soit \(\sigma\)-finie, il faut et il suffit qu'il existe une suite \({(A_n)}_{n \in \N}\) d'éléments de \(\scrC\) telle que \(E = \cup_{n \in \N} A_n\) et \(\mu(A_n) < +\infty\).
+\end{remark}
+
+\begin{proposition}\label{prop2:1:11}
+	Soient \(\mu_1\) et \(\mu_2\) deux mesures positives sur un clan unitaire \(\scrC\) et soit \(\lambda \geqslant 0\) un réel. Alors les fonctions \((\mu_1 + \mu_2)\) et \((\lambda\mu_1)\) de \(\scrC\) dans \(\RR^+\) définies par :
+	\begin{gather*}
+		(\mu_1 + \mu_2)(A) = \mu_1(A) + \mu_2(A) \: \text{,} \\
+		(\lambda\mu_1)(A) = \lambda\,\mu_1(A) \: \text{,}
+	\end{gather*}
+	sont des mesures positives sur \(\scrC\).
+\end{proposition}
+
+\begin{theorem}\label{thm2:1:12}
+	Soient \(\mu\) une mesure positive sur un clan unitaire \(\scrC\) et \({(A_n)}_{n \in \N}\) une suite croissante d'éléments de \(\scrC\) telle que \(\cup_{n \in \N} A_n \in \scrC\). On a alors :
+	\[ \mu \Biggl( \bigcup_{n \in \N} A_n \Biggr) = \sup_{n \in \N} {\mu(A_n)} \: \text{.}\]
+\end{theorem}
+
+\begin{theorem}\label{thm2:1:13}
+	Soient \(\mu\) une mesure positive sur un clan unitaire \(\scrC\) et \({(A_n)}_{n \in \N}\) une suite d'éléments de \(\scrC\) telle que \(\cup_{n \in \N} A_n \in \scrC\). On a alors :
+	\[ \mu \Biggl( \bigcup_{n \in \N} A_n \Biggr) \leqslant \sum_{n \in \N} \mu(A_n) \: \text{.} \]
+\end{theorem}
+
+\begin{theorem}\label{thm2:1:14}
+	Soient \(\mu\) une mesure positive sur un clan unitaire \(\scrC\) et \({(A_n)}_{n \in N}\) une suite décroissante d'éléments de \(\scrC\) telle que \(\cap_{n \in \N} A_n \in \scrC\). S'il existe \(n_0 \in \N\) tel que tel que \(\mu(A_{n_0}) < +\infty\), on a alors :
+	\[ \mu \Biggl( \bigcap_{n \in \N} A_n \Biggr) = \inf_{n \in \N} {\mu(A_n)} \: \text{.} \]
+\end{theorem}
+
+\begin{definition}\label{def2:1:15}
+	Soit \(\mu\) une mesure positive sur un clan unitaire \(\scrC\). Un élément \(A \in \scrC\) est dit \(\mu\)-négligeable si \(\mu(A) = 0\).
+\end{definition}
+
+\begin{proposition}\label{prop2:1:16}
+	Soient \(\mu\) une mesure positive sur un clan unitaire \(\scrC\) et \({(A_n)}_{n \in \N}\) une famille d'éléments \(\mu\)-négligeables de \(\scrC\) telle que \(\cup_{n \in \N} A_n \in \scrC\). Alors \(\cup_{n \in \N} A_n\) est une partie \( \mu\)-négligeable de \(\scrC\).
+\end{proposition}
+
+\section{Espaces mesurés}
+
+\begin{definition}\label{def2:2:1}
+	On appelle espace mesuré toute structure \((E\,, \scrT\,, \mu)\) où \(\scrT\) est une tribu sur \(E\) et \(\mu\) une mesure positive sur la tribu \(\scrT\).
+\end{definition}
+
+\begin{proposition}\label{prop2:2:2}
+	Soit \((E\,, \scrT\,, \mu)\) un espace mesuré et soit \(A \in \scrT\). Notons \(\scrT_{|A}\) la tribu induite par \(\scrT\) sur \(A\). Alors,
+	\[ \scrT_{|A} = \{\p B \in \scrT \mathrel{|} B \subset A \p\} \: \text{,} \]
+	et l'application \(\mu\) restreinte à \(\scrT_{|A}\) est une mesure positive sur \(\scrT_{|A}\).
+\end{proposition}
+
+\begin{definition}\label{def2:2:3}
+	Soit \((E\,, \scrT\,, \mu)\) un espace mesuré. On appelle sous-espace mesuré tout triplet \((A\,, \scrT_{|A}\,, \mu_{|\scrT_{|A}})\) où \(A \in \scrT\), \(\scrT_{|A}\) est la tribu induite par \(\scrT\) sur \(A\), et \(\mu_{|\scrT_{|A}}\) est la restriction de \(\mu\) par \(\scrT_{|A}\). La mesure \(\mu_{|\scrT_{|A}}\) est appelée mesure induite par \(\mu\) sur \(A\).
+\end{definition}
+
+\begin{proposition}\label{prop2:2:4}
+	Soient \((E\,, \scrT\,, \mu)\) un espace mesuré, \((E'\,, \scrT')\) un espace mesurable et \(f\) une fonction de \(E\) dans \(E'\) qui est \(\scrT \scrT'\)-mesurable. L'application \(\mu'\) de \(\scrT'\) dans \(\RR^+\) définie par :
+	\[ \mu'(B) = \mu\bigl(f^{-1}(B)\bigr) \]
+	est une mesure positive.
+\end{proposition}
+
+\begin{definition}\label{def2:2:5}
+	Soient \((E\,, \scrT\,, \mu)\) un espace mesuré, \((E'\,, \scrT')\) un espace mesurable et \(f\) une fonction de \(E\) dans \(E'\) qui est \(\scrT \scrT'\)-mesurable. La mesure \(\mu'\) définie dans la proposition précédente par :
+	\[ \mu'(B) = \mu\bigl(f^{-1}(B)\bigr) \]
+	est appelée mesure image de la mesure \(\mu\) par la fonction \(f\).
+\end{definition}
+
+\section{Prolongements d'une mesure positive}
+
+\subsection{Prolongement à la tribu engendrée}
+
+\begin{theorem}[Prolongement]
+	Soient \(\scrC\) un clan unitaire, \(\mu\) une mesure positive sur \(\scrC\). Il existe une mesure positive \(\tilde{\mu}\) sur \(\scrT(\scrC)\) qui prolonge \(\mu\).
+\end{theorem}
+
+\textit{\color{blue}
+\begin{itemize}
+	\item[A.] Les mesures extérieures
+\end{itemize}}
+Soit \(E\) un ensemble non-vide. On appelle mesure extérieure toute application \(\lambda\) de l'ensemble \(\scrP(E)\) des parties de \(E\) dans \(\RR^+\) vérifiant :
+\begin{enumerate}
+	\item \(\lambda(\OO) = 0\) ;
+	\item Pour tout \(A\) et tout \(B\) tels que \(A \subset B \subset E\), on a \(\lambda(A) \leqslant \lambda(B)\) ;
+	\item Pour toute suite \({(A_n)}_{n \in \N}\) d'éléments de \(\scrP(E)\), on a :
+		\[ \lambda \Biggl(\bigcup_{n \in \N} A_n \Biggr) \leqslant \sum_{n \in \N} \lambda(A_n) \: \text{.} \]
+\end{enumerate}
+
+\textit{\color{blue}
+\begin{itemize}
+	\item[A.1.] Tribu associée à une mesure extérieure
+\end{itemize}}
+Soit \(\lambda\) une mesure extérieure sur \(E\). L'ensemble \(\scrT_\lambda\) des parties de \(A\) de \(E\) telles que pour tout \(B \subset E\), on ait :
+\[ \lambda(B) = \lambda(B \cap A) + \lambda(B \cap \cc_E A) \: \text{,} \]
+est une tribu sur \(E\) et la restriction de la mesure extérieure \(\lambda\) à la tribu \(\scrT_\lambda\) est une mesure positive sur \(\scrT_\lambda\).
+
+\textit{\color{blue}
+\begin{itemize}
+	\item[B.] Le prolongement
+\end{itemize}}
+La construction du prolongement de la mesure \(\mu\) va se faire en deux parties.
+
+\textit{\color{blue}
+\begin{itemize}
+	\item[B.1.] Mesure extérieure associée à une mesure positive.
+\end{itemize}}
+Soit \(\scrC\) un clan unitaire sur un ensemble \(E\) et soit \(\mu\) une mesure positive sur \(\scrC\). Pour tout \(P \subset E\), posons :
+\[ \mu^*(P) = \inf\Biggl( \sum_{i=0}^{+\infty} \mu(A_i) \Biggr) \: \text{.} \]
+où la borne inférieure est prise sur toutes les suites \({(A_n)}_{n \in \N}\) d'éléments de \(\scrC\) telles que \(P \subset \cup_{n \in \N} A_n\). Alors \(\mu^*\) est une mesure extérieure sur \(E\).
+
+\textit{\color{blue}
+\begin{itemize}
+	\item[B.2.] Étude de la tribu \(\scrT_{\mu^*}\) associée à la mesure \(\mu^*\)
+\end{itemize}}
+La tribu \(\scrT_{\mu^*}\) contient la tribu \(\scrT(\scrC)\) engendrée par \(\scrC\) et \(\mu^*\) restreinte à \(\scrC\) est égale à \(\mu\).
+
+\textit{\color{blue}
+\begin{itemize}
+	\item[B.3.] Unicité du prolongement dans la cas où la mesure est \(\sigma\)-finie.
+\end{itemize}}
+La mesure \(\mu\) étant \(\sigma\)-finie, il existe une suite \({(A_n)}_{n \in \N}\) d'éléments du clan unitaire \(\scrC\) telle que \(\cup_{n \in \N} A_n = E\) et \(\mu(A_n) < +\infty\). Considérons la suite \({(B_n)}_{n \in \N}\) définie par \(B_0 = A_0\) et pour \(n \geqslant 1\), \(B_n = A_n \setminus \cup_{k \geqslant n-1} A_{k}\). Les \(B_n\) sont des éléments de \(\scrC\) et \(\cup_{n \in \N} B_n = E\). De plus, les \(B_n\) sont deux à deux disjoints et \(\mu(B_n)\)
+
+\end{document}
+
+
+
+
+
